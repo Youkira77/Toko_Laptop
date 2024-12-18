@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Laptop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #228be6, #15aabf);
+            padding: 30px;
+            border-radius: 16px;
+            color: white;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .back-button {
+            margin-bottom: 20px;
+        }
+
+        .laptop-card {
+            background: white;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .laptop-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            color: #228be6;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+
+        .spec-icon {
+            width: 24px;
+            color: #228be6;
+            margin-right: 8px;
+        }
+
+        .price-tag {
+            background: #e9ecef;
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: #2b8a3e;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .page-container {
+                margin: 20px auto;
+            }
+
+            .header {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="back-button">
+            <a href="{% url 'main:index' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Kembali ke Beranda
+            </a>
+        </div>
+
+        <div class="header">
+            <h1 class="mb-0">Daftar Laptop</h1>
+            <p class="mb-0 mt-2">Katalog laptop yang tersedia</p>
+        </div>
+        
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for laptop in laptops %}
+            <div class="col">
+                <div class="laptop-card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ laptop.namaLaptop }}</h5>
+                        <div class="specs">
+                            <div class="spec-item">
+                                <i class="bi bi-cpu spec-icon"></i>
+                                <span>{{ laptop.processor }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <i class="bi bi-memory spec-icon"></i>
+                                <span>RAM: {{ laptop.ram }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <i class="bi bi-device-hdd spec-icon"></i>
+                                <span>Storage: {{ laptop.storage }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <i class="bi bi-gpu-card spec-icon"></i>
+                                <span>{{ laptop.gpu }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <i class="bi bi-display spec-icon"></i>
+                                <span>{{ laptop.layar }}</span>
+                            </div>
+                        </div>
+                        <div class="price-tag">
+                            Rp {{ laptop.harga}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

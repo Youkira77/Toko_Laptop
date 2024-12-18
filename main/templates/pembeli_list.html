@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pembeli</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .report-card {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 1200px;
+            background: #fff;
+        }
+
+        .customer-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .customer-item {
+            padding: 20px;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .customer-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+        }
+
+        .customer-name {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .customer-address {
+            color: #6c757d;
+        }
+
+        .back-button {
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .report-card {
+                padding: 20px;
+                margin: 15px;
+            }
+            
+            .customer-item {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back-button">
+            <a href="{% url 'main:index' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Kembali ke Beranda
+            </a>
+        </div>
+
+        <div class="report-card">
+            <h1 class="text-center mb-4">Daftar Pembeli</h1>
+            <div class="customer-list">
+                {% if pembelis %}
+                    {% for pembeli in pembelis %}
+                        <div class="customer-item">
+                            <span class="customer-name">{{ pembeli.nama }}</span>
+                            <span class="customer-address">{{ pembeli.alamat }}</span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-5">
+                        <div class="text-muted">
+                            <i class="bi bi-people fs-2 mb-3"></i>
+                            <p class="mb-0">Belum ada data pembeli.</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

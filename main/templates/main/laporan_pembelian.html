@@ -1,0 +1,387 @@
+<!-- laporan_pembelian.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Pembelian</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .report-card {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 1200px;
+            background: #fff;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+        }
+
+        .table {
+            margin-bottom: 0;
+            vertical-align: middle;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
+
+        .table thead {
+            background-color: #f1f3f5;
+            border-radius: 8px;
+        }
+
+        .table thead th {
+            border: none;
+            font-weight: 600;
+            color: #343a40;
+            padding: 16px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .table tbody tr {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+
+        .table td {
+            padding: 16px;
+            border: none;
+            vertical-align: middle;
+        }
+
+        .detail-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .detail-list li {
+            padding: 12px;
+            border: 1px solid #e9ecef;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            transition: all 0.2s ease;
+        }
+
+        .detail-list li:hover {
+            background-color: #fff;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+            transform: translateX(4px);
+        }
+
+        .total-harga {
+            font-weight: 600;
+            color: #2b8a3e;
+            font-size: 1.1em;
+        }
+
+        .laptop-price {
+            color: #1971c2;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+
+        .laptop-qty {
+            background-color: #e9ecef;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .filter-section {
+            background-color: #f8f9fa;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #e9ecef;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #343a40;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.95em;
+        }
+
+        .form-control:focus {
+            border-color: #4dabf7;
+            box-shadow: 0 0 0 3px rgba(13,110,253,0.15);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: #228be6;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #1c7ed6;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #495057;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #343a40;
+            transform: translateY(-1px);
+        }
+
+        .pagination {
+            margin: 20px 0 0;
+            gap: 6px;
+        }
+
+        .page-link {
+            color: #228be6;
+            border-radius: 8px;
+            padding: 10px 16px;
+            border: 1px solid #dee2e6;
+            font-weight: 500;
+        }
+
+        .page-link:hover {
+            background-color: #e9ecef;
+            color: #1864ab;
+        }
+
+        .page-item.active .page-link {
+            background-color: #228be6;
+            border-color: #228be6;
+        }
+
+        .summary-card {
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            background: linear-gradient(45deg, #228be6, #15aabf);
+            color: white;
+        }
+
+        .summary-card .card-title {
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+
+        .summary-card h3 {
+            font-size: 2em;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .back-button {
+            margin: 24px 0;
+        }
+
+        @media (max-width: 768px) {
+            .report-card {
+                padding: 20px;
+                margin: 15px;
+            }
+
+            .filter-section {
+                padding: 20px;
+            }
+
+            .table td, .table th {
+                padding: 12px;
+            }
+
+            .detail-list li {
+                padding: 10px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+            }
+            
+            .summary-card h3 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back-button">
+            <a href="{% url 'main:index' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Kembali ke Beranda
+            </a>
+        </div>
+
+        <div class="report-card">
+            <h1 class="text-center mb-4">Laporan Pembelian</h1>
+
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="summary-card">
+                        <h6 class="card-title">Total Transaksi</h6>
+                        <h3 class="mb-0">{{ total_transaksi }}</h3>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="summary-card" style="background: linear-gradient(45deg, #40c057, #2b8a3e); color: white;">
+                        <h6 class="card-title">Total Harga</h6>
+                        <h3 class="mb-2">{{ membeli.total_harga }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <form method="get" class="mb-0">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="start_date" class="form-label">Tanggal Mulai:</label>
+                            <input type="date" class="form-control" id="start_date" name="start_date" 
+                                   value="{{ start_date|default:'' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="end_date" class="form-label">Tanggal Akhir:</label>
+                            <input type="date" class="form-control" id="end_date" name="end_date"
+                                   value="{{ end_date|default:'' }}">
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-search"></i> Filter
+                                </button>
+                                <a href="{% url 'main:laporan_pembelian' %}" class="btn btn-outline-secondary">
+                                    <i class="bi bi-x-circle"></i> Reset
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">No.</th>
+                            <th>Pembeli</th>
+                            <th>Tanggal Pembelian</th>
+                            <th>Total Harga</th>
+                            <th>Detail Pembelian</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if transaksi %}
+                            {% for transaksi in transaksi %}
+                            <tr>
+                                <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                <td class="align-middle"><strong>{{ transaksi.id_pembeli.nama }}</strong></td>
+                                <td class="align-middle">{{ transaksi.tanggal_beli|date:"d F Y" }}</td>
+                                <td class="align-middle total-harga">{{ transaksi.total_harga }}</td>
+                                <td>
+                                    <ul class="detail-list">
+                                        {% for detail in transaksi.detailmembeli_set.all %}
+                                        <li>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="fw-bold">{{ detail.id_laptop.namaLaptop }}</span>
+                                                <span class="laptop-qty">{{ detail.jumlahPcs }} pcs</span>
+                                            </div>
+                                            <div class="text-end laptop-price">
+                                                Rp {{ detail.id_laptop.harga}}
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center py-5">
+                                    <div class="text-muted">
+                                        <i class="bi bi-inbox fs-2 mb-3"></i>
+                                        <p class="mb-0">Tidak ada data pembelian.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% if transaksi.has_other_pages %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if transaksi.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ transaksi.previous_page_number }}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}">&laquo;</a>
+                    </li>
+                    {% endif %}
+                    
+                    {% for i in transaksi.paginator.page_range %}
+                        {% if transaksi.number == i %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ i }}</span>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ i }}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}">{{ i }}</a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if transaksi.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ transaksi.next_page_number }}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}">&raquo;</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
